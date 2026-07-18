@@ -1,0 +1,70 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Station auswählen",
+        "description": "Wähle eine Messstation der Stadt Nürnberg (Umweltdaten). Es werden {count} Stationen gefunden.",
+        "data": {
+          "station_code": "Station"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Verbindung zum Server der Stadt Nürnberg fehlgeschlagen.",
+      "no_data": "Für diese Station stehen aktuell keine nutzbaren Messwerte zur Verfügung.",
+      "unknown": "Unerwarteter Fehler."
+    },
+    "abort": {
+      "already_configured": "Diese Station ist bereits eingerichtet."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Abrufintervall",
+        "description": "Wie oft sollen die Messwerte abgerufen werden? Luft-/Wetterstationen liefern stündlich neue Werte, Wasserstationen alle 15 Minuten. Standard ist {default} Minuten.",
+        "data": {
+          "scan_interval_min": "Intervall (Minuten)"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "nitrogen_monoxide": { "name": "Stickstoffmonoxid" },
+      "nitrogen_oxides": { "name": "Stickoxide" },
+      "nitrogen_dioxide": { "name": "Stickstoffdioxid" },
+      "sulfur_dioxide": { "name": "Schwefeldioxid" },
+      "ozone": { "name": "Ozon" },
+      "ozone_8h": { "name": "Ozon (8h-Mittel)" },
+      "carbon_monoxide": { "name": "Kohlenmonoxid" },
+      "benzene": { "name": "Benzol" },
+      "toluene": { "name": "Toluol" },
+      "methane": { "name": "Methan" },
+      "thc": { "name": "Gesamtkohlenwasserstoffe" },
+      "non_methane_hydrocarbon": { "name": "Nichtmethankohlenwasserstoffe" },
+      "particulate_matter_pm10": { "name": "Feinstaub PM10" },
+      "particulate_matter_pm2_5": { "name": "Feinstaub PM2,5" },
+      "particulate_matter_pm10_raw": { "name": "Feinstaub PM10 (roh)" },
+      "particulate_matter_pm2_5_raw": { "name": "Feinstaub PM2,5 (roh)" },
+      "air_temperature": { "name": "Lufttemperatur" },
+      "air_humidity": { "name": "Luftfeuchtigkeit" },
+      "air_pressure": { "name": "Luftdruck" },
+      "wind_speed": { "name": "Windgeschwindigkeit" },
+      "wind_speed_peak": { "name": "Max. Windgeschwindigkeit" },
+      "wind_direction": { "name": "Windrichtung" },
+      "global_radiation": { "name": "Globale Strahlung" },
+      "precipitation": { "name": "Niederschlag" },
+      "uv_index": { "name": "UV-Index" },
+      "water_temperature": { "name": "Wassertemperatur" },
+      "ph": { "name": "pH-Wert" },
+      "conductivity": { "name": "Elektrische Leitfähigkeit" },
+      "oxygen": { "name": "Sauerstoff" },
+      "turbidity": { "name": "Trübung" },
+      "chlorophyll": { "name": "Chlorophyll" },
+      "phosphorous": { "name": "Phosphat" },
+      "ammonium": { "name": "Ammonium" },
+      "nitrate": { "name": "Nitrat" }
+    }
+  }
+}

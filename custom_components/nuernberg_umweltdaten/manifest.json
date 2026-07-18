@@ -1,0 +1,10 @@
+{
+  "domain": "nuernberg_umweltdaten",
+  "name": "Nürnberg Umweltdaten",
+  "codeowners": ["@pgress"],
+  "config_flow": true,
+  "documentation": "https://www.nuernberg.de/internet/umweltdaten/",
+  "integration_type": "hub",
+  "iot_class": "cloud_polling",
+  "version": "1.0.0"
+}

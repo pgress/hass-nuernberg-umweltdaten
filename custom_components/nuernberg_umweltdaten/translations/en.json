@@ -1,0 +1,70 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Select station",
+        "description": "Choose a measuring station operated by the City of Nuremberg (Umweltdaten). {count} stations found.",
+        "data": {
+          "station_code": "Station"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Could not connect to the City of Nuremberg server.",
+      "no_data": "This station currently provides no usable measurements.",
+      "unknown": "Unexpected error."
+    },
+    "abort": {
+      "already_configured": "This station is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Polling interval",
+        "description": "How often should values be fetched? Air/weather stations publish a new value every hour, water stations every 15 minutes. Default is {default} minutes.",
+        "data": {
+          "scan_interval_min": "Interval (minutes)"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "nitrogen_monoxide": { "name": "Nitrogen monoxide" },
+      "nitrogen_oxides": { "name": "Nitrogen oxides" },
+      "nitrogen_dioxide": { "name": "Nitrogen dioxide" },
+      "sulfur_dioxide": { "name": "Sulphur dioxide" },
+      "ozone": { "name": "Ozone" },
+      "ozone_8h": { "name": "Ozone (8h average)" },
+      "carbon_monoxide": { "name": "Carbon monoxide" },
+      "benzene": { "name": "Benzene" },
+      "toluene": { "name": "Toluene" },
+      "methane": { "name": "Methane" },
+      "thc": { "name": "Total hydrocarbons" },
+      "non_methane_hydrocarbon": { "name": "Non-methane hydrocarbons" },
+      "particulate_matter_pm10": { "name": "Particulate matter PM10" },
+      "particulate_matter_pm2_5": { "name": "Particulate matter PM2.5" },
+      "particulate_matter_pm10_raw": { "name": "Particulate matter PM10 (raw)" },
+      "particulate_matter_pm2_5_raw": { "name": "Particulate matter PM2.5 (raw)" },
+      "air_temperature": { "name": "Air temperature" },
+      "air_humidity": { "name": "Humidity" },
+      "air_pressure": { "name": "Air pressure" },
+      "wind_speed": { "name": "Wind speed" },
+      "wind_speed_peak": { "name": "Peak wind speed" },
+      "wind_direction": { "name": "Wind direction" },
+      "global_radiation": { "name": "Global radiation" },
+      "precipitation": { "name": "Precipitation" },
+      "uv_index": { "name": "UV index" },
+      "water_temperature": { "name": "Water temperature" },
+      "ph": { "name": "pH value" },
+      "conductivity": { "name": "Conductivity" },
+      "oxygen": { "name": "Oxygen" },
+      "turbidity": { "name": "Turbidity" },
+      "chlorophyll": { "name": "Chlorophyll" },
+      "phosphorous": { "name": "Phosphate" },
+      "ammonium": { "name": "Ammonium" },
+      "nitrate": { "name": "Nitrate" }
+    }
+  }
+}

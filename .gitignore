@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Home Assistant
+.HA_VERSION
+.homeassistant
+
+# Editors / OS
+.DS_Store
+.vscode/
+.idea/
+*.swp
