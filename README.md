@@ -35,7 +35,7 @@ Each sensor carries `last_measured` (the station's `date_entry`) and
 ## Stations & measurements
 
 <p align="center">
-  <img src="images/stations.svg" alt="Übersicht der Messstationen in Nürnberg" width="640"/>
+  <img src="images/stations.png" alt="Übersicht der Messstationen in Nürnberg auf OpenStreetMap-Karte" width="720"/>
 </p>
 
 The table below shows which values each station currently provides. The
