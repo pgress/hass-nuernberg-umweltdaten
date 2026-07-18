@@ -1,4 +1,6 @@
 {
   "name": "Nürnberg Umweltdaten",
-  "render_readme": true
+  "render_readme": true,
+  "country": "DE",
+  "homeassistant": "2023.7.0"
 }

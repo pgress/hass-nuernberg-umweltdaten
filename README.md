@@ -76,6 +76,8 @@ Integration erzeugt genau diese Sensoren dynamisch – `null`-Felder werden
 
 ## Installation (HACS)
 
+[![Open your Home Assistant instance and add this repository to HACS.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=pgress&repository=hass-nuernberg-umweltdaten&category=integration)
+
 1. Dieses Repository in HACS als benutzerdefiniertes Repository hinzufügen
    (**Einstellungen → Benutzerdefinierte Repositories**, Kategorie *Integration*).
 2. **Nürnberg Umweltdaten** installieren.
@@ -114,6 +116,13 @@ Stadt Nürnberg.** Sie sind nicht Teil der MIT-Lizenz dieser Integration.
 
 Die Messdaten selbst sind ebenfalls nicht von der Lizenz dieser Integration
 erfasst und bleiben Eigentum der Stadt Nürnberg.
+
+## Verwandte Projekte
+
+Die zugrunde liegende (undokumentierte) JSON-API wurde bereits von
+[`craftamap/nuernberg-umweltdaten-api`](https://github.com/craftamap/nuernberg-umweltdaten-api)
+in TypeScript-Typen dokumentiert. Diese Integration baut auf derselben API auf;
+vielen Dank an das Projekt für die Vorarbeit zur API-Dokumentation.
 
 ## Lizenz
 
