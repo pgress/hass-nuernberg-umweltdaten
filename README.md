@@ -53,3 +53,19 @@ Each sensor carries `last_measured` (the station's `date_entry`) and
   refurbished until approximately November 2026 and may deliver stale values.
 - The underlying API is undocumented; it is the same one used by the city's
   public web frontend.
+
+## Data source & attribution
+
+All measurement data is provided by the **City of Nuremberg** – specifically
+the *Stadtentwässerung und Umweltanalytik Nürnberg (SUN)* – via the public
+website [nuernberg.de/internet/umweltdaten/](https://www.nuernberg.de/internet/umweltdaten/).
+This integration consumes the same undocumented JSON microservice that powers
+that website. There is no formal API contract, API key or rate-limit agreement;
+please use it fairly and do not poll more aggressively than necessary. The
+data itself is not covered by this repository's license and remains the property
+of the City of Nuremberg.
+
+## License
+
+This integration is licensed under the [MIT License](LICENSE).
+
