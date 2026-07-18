@@ -1,38 +1,38 @@
 # Nürnberg Umweltdaten (Home Assistant)
 
-Custom integration for Home Assistant that reads the public environmental data
-published by the **City of Nuremberg** (Stadtentwässerung & Umweltanalytik
-Nürnberg, SUN) via its JSON microservice
-`https://microservices.nuernberg.de/umweltdaten/`.
+Custom-Integration für Home Assistant, die die öffentlichen Umweltdaten der
+**Stadt Nürnberg** (Stadtentwässerung & Umweltanalytik Nürnberg, SUN) über
+deren JSON-Microservice `https://microservices.nuernberg.de/umweltdaten/`
+ausliest.
 
-## Features
+## Funktionen
 
-- **Station picker:** during setup you choose one of the official measuring
-  stations (Flughafen, Muggenhof, Frankenschnellweg, …). Several stations can
-  be added independently.
-- **One device per station** with the station name as device name.
-- **Dynamic sensors:** only the values that the selected station actually
-  reports are created. Fields that are `null` for a station are skipped, so no
-  "unknown" sensors clutter your setup. A Flughafen entry therefore creates
-  air-quality *and* weather sensors, while a pure weather station only exposes
-  weather sensors.
-- Polled every 30 minutes for air/weather stations and every 15 minutes for
-  water stations by default. The interval can be tuned per station in the
-  integration's options (slider, 5–1440 minutes). Changing it reloads the
-  station automatically. No API key required.
+- **Stationsauswahl:** Beim Einrichten wählst du eine der offiziellen
+  Messstationen (Flughafen, Muggenhof, Frankenschnellweg, …). Mehrere Stationen
+  lassen sich unabhängig voneinander hinzufügen.
+- **Ein Gerät pro Station** mit dem Stationsnamen als Gerätenamen.
+- **Dynamische Sensoren:** Es werden nur die Werte angelegt, die die gewählte
+  Station tatsächlich liefert. Felder, die für eine Station `null` sind, werden
+  übersprungen – es entstehen also keine „unknown"-Sensoren. Ein Flughafen-Eintrag
+  erzeugt dadurch Luft- *und* Wettersensoren, eine reine Wetterstation nur
+  Wettersensoren.
+- Abruf standardmäßig alle 30 Minuten (Luft-/Wetterstationen) bzw. alle
+  15 Minuten (Wasserstationen). Das Intervall ist pro Station in den Optionen
+  einstellbar (Slider, 5–1440 Minuten); eine Änderung lädt die Station automatisch
+  neu. Kein API-Key erforderlich.
 
-## Covered measurements
+## Erfasste Messwerte
 
-| Category | Values |
-|----------|--------|
-| Außenluft | NO, NO₂, NOx, SO₂, O₃, O₃-8h, CO, Benzol, Toluol, Methan, THC, NMHC, PM10, PM2.5 (+ raw) |
+| Kategorie | Werte |
+|-----------|-------|
+| Außenluft | NO, NO₂, NOx, SO₂, O₃, O₃-8h, CO, Benzol, Toluol, Methan, THC, NMHC, PM10, PM2,5 (+ roh) |
 | Wetterdaten | Lufttemperatur, Luftfeuchtigkeit, Luftdruck, Windgeschwindigkeit, Max.-Wind, Windrichtung, Globale Strahlung, Niederschlag, UV-Index |
 | Fließgewässer | Wassertemperatur, pH, Leitfähigkeit, Sauerstoff, Trübung, Chlorophyll, Phosphat, Ammonium, Nitrat |
 
-Each sensor carries `last_measured` (the station's `date_entry`) and
-`station_code` as extra attributes.
+Jeder Sensor trägt `last_measured` (der `date_entry` der Station) und
+`station_code` als zusätzliche Attribute.
 
-## Stations & measurements
+## Stationen & Messwerte
 
 Die folgenden Lagepläne werden von der **Stadt Nürnberg** (Stadtentwässerung
 und Umweltanalytik Nürnberg) veröffentlicht und zeigen die autoritativen
@@ -46,9 +46,9 @@ Standorte der Messstationen. Quelle:
   </tr>
 </table>
 
-The table below shows which values each station currently provides. The
-integration creates exactly these sensors dynamically – `null` fields are
-skipped, so no "unknown" entities appear.
+Die folgende Tabelle zeigt, welche Werte jede Station aktuell liefert. Die
+Integration erzeugt genau diese Sensoren dynamisch – `null`-Felder werden
+übersprungen, sodass keine „unknown"-Entitäten entstehen.
 
 | Code | Station | Kategorie | Messwerte |
 |------|---------|-----------|-----------|
@@ -76,38 +76,45 @@ skipped, so no "unknown" entities appear.
 
 ## Installation (HACS)
 
-1. Copy this repository into HACS as a custom repository
-   (**Settings → Custom repositories**, category *Integration*).
-2. Install **Nürnberg Umweltdaten**.
-3. Restart Home Assistant.
-4. Add the integration via **Settings → Devices & Services → Add integration**
-   and select *Nürnberg Umweltdaten*. Pick a station – the sensors appear
-   automatically.
-5. Optionally adjust the polling interval via **Configure** on the integration
-   card (recommended: stay near the defaults, since faster polling only
-   re-fetches identical values).
+1. Dieses Repository in HACS als benutzerdefiniertes Repository hinzufügen
+   (**Einstellungen → Benutzerdefinierte Repositories**, Kategorie *Integration*).
+2. **Nürnberg Umweltdaten** installieren.
+3. Home Assistant neu starten.
+4. Die Integration hinzufügen über **Einstellungen → Geräte & Dienste →
+   Integration hinzufügen** und *Nürnberg Umweltdaten* auswählen. Eine Station
+   wählen – die Sensoren erscheinen automatisch.
+5. Optional das Abrufintervall anpassen über **Konfigurieren** auf der
+   Integrationskarte (empfohlen: nahe den Standardwerten bleiben, da schnelleres
+   Abrufen nur identische Werte erneut liefert).
 
-## Notes
+## Hinweise
 
-- The official portal states that data younger than seven days is still
-  unverified.
-- The stations *Theodor-Heuss-Brücke*, *Neumühle* and *Hüttendorf* are being
-  refurbished until approximately November 2026 and may deliver stale values.
-- The underlying API is undocumented; it is the same one used by the city's
-  public web frontend.
+- Laut offiziellem Portal sind Daten, die jünger als sieben Tage sind, noch
+  ungeprüft.
+- Die Stationen *Theodor-Heuss-Brücke*, *Neumühle* und *Hüttendorf* werden bis
+  ca. November 2026 erneuert und können veraltete Werte liefern.
+- Die zugrunde liegende API ist nicht dokumentiert; es handelt sich um dieselbe
+  Schnittstelle, die das öffentliche Web-Frontend der Stadt nutzt.
 
-## Data source & attribution
+## Datenquelle & Urheberrecht
 
-All measurement data is provided by the **City of Nuremberg** – specifically
-the *Stadtentwässerung und Umweltanalytik Nürnberg (SUN)* – via the public
-website [nuernberg.de/internet/umweltdaten/](https://www.nuernberg.de/internet/umweltdaten/).
-This integration consumes the same undocumented JSON microservice that powers
-that website. There is no formal API contract, API key or rate-limit agreement;
-please use it fairly and do not poll more aggressively than necessary. The
-data itself is not covered by this repository's license and remains the property
-of the City of Nuremberg.
+Sämtliche Messdaten werden von der **Stadt Nürnberg** – genauer der
+*Stadtentwässerung und Umweltanalytik Nürnberg (SUN)* – über die öffentliche
+Website [nuernberg.de/internet/umweltdaten/](https://www.nuernberg.de/internet/umweltdaten/)
+bereitgestellt. Diese Integration nutzt denselben undokumentierten
+JSON-Microservice, der auch diese Website antreibt. Es gibt keinen formellen
+API-Vertrag, keinen API-Key und keine Rate-Limit-Vereinbarung; bitte nutze die
+Schnittstelle fair und rufe sie nicht häufiger ab als nötig.
 
-## License
+Die **Lagepläne** in diesem Repository (`images/stadt_lageplan_luft.jpg`,
+`images/stadt_lageplan_regen.jpg`) stammen von der Stadt Nürnberg
+(`nuernberg.de`) und werden hier ausschließlich zu Dokumentationszwecken
+eingebunden. **Urheber- und Verwertungsrechte an diesen Plänen liegen bei der
+Stadt Nürnberg.** Sie sind nicht Teil der MIT-Lizenz dieser Integration.
 
-This integration is licensed under the [MIT License](LICENSE).
+Die Messdaten selbst sind ebenfalls nicht von der Lizenz dieser Integration
+erfasst und bleiben Eigentum der Stadt Nürnberg.
 
+## Lizenz
+
+Diese Integration steht unter der [MIT-Lizenz](LICENSE).
