@@ -34,13 +34,17 @@ Each sensor carries `last_measured` (the station's `date_entry`) and
 
 ## Stations & measurements
 
-<p align="center">
-  <img src="images/stations.png" alt="Übersicht der Messstationen in Nürnberg auf OpenStreetMap-Karte" width="720"/>
-</p>
+Die folgenden Lagepläne werden von der **Stadt Nürnberg** (Stadtentwässerung
+und Umweltanalytik Nürnberg) veröffentlicht und zeigen die autoritativen
+Standorte der Messstationen. Quelle:
+[nuernberg.de/internet/umweltdaten](https://www.nuernberg.de/internet/umweltdaten/).
 
-> Die Marker-Positionen sind teilweise approximativ (geocodiert). Die
-> autoritativen Lagepläne der Stadt Nürnberg finden sich unten im Abschnitt
-> *[Offizielle Lagepläne](#offizielle-lageplane)*.
+<table align="center">
+  <tr>
+    <td align="center"><img src="images/stadt_lageplan_luft.jpg" alt="Lageplan Luftmessstationen (Stadt Nürnberg)" width="420"/><br><sub>Luftmessstationen (SUN &amp; LfU)</sub></td>
+    <td align="center"><img src="images/stadt_lageplan_regen.jpg" alt="Lageplan Wetter-/Niederschlagsstationen (Stadt Nürnberg)" width="420"/><br><sub>Wetter-/Niederschlagsstationen</sub></td>
+  </tr>
+</table>
 
 The table below shows which values each station currently provides. The
 integration creates exactly these sensors dynamically – `null` fields are
@@ -102,20 +106,6 @@ that website. There is no formal API contract, API key or rate-limit agreement;
 please use it fairly and do not poll more aggressively than necessary. The
 data itself is not covered by this repository's license and remains the property
 of the City of Nuremberg.
-
-## Offizielle Lagepläne
-
-Die Stadt Nürnberg veröffentlicht selbst schematische Pläne der Stationen.
-Diese sind die autoritative Quelle für die Standorte (Quelle:
-[nuernberg.de/internet/umweltdaten](https://www.nuernberg.de/internet/umweltdaten/),
-Stadtentwässerung und Umweltanalytik Nürnberg).
-
-<table align="center">
-  <tr>
-    <td align="center"><img src="images/stadt_lageplan_luft.jpg" alt="Lageplan Luftmessstationen (Stadt Nürnberg)" width="380"/><br><sub>Luftmessstationen (SUN &amp; LfU)</sub></td>
-    <td align="center"><img src="images/stadt_lageplan_regen.jpg" alt="Lageplan Regenmessstationen (Stadt Nürnberg)" width="380"/><br><sub>Wetter-/Niederschlagsstationen</sub></td>
-  </tr>
-</table>
 
 ## License
 
