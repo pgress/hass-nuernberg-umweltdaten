@@ -126,7 +126,7 @@ vielen Dank an das Projekt für die Vorarbeit zur API-Dokumentation.
 
 ## Hinweis zur Entstehung
 
-Diese Integration wurde vollständig mit Unterstützung von KI (Kilo / Claude)
+Diese Integration wurde vollständig mit Unterstützung von KI (Kilo / GLM-5-2)
 erstellt – sämtlicher Code, die Konfigurations-Logik und die Dokumentation
 sind maschinell generiert und wurden vom Autor kuratiert und geprüft. Die
 zugrunde liegende API wurde durch Analyse des öffentlichen Web-Frontends der
