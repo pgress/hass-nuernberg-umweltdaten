@@ -52,6 +52,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         entry.data[CONF_STATION_CODE],
         entry.data.get(CONF_STATION_NAME, ""),
         _resolve_scan_interval(entry),
+        entry.data.get(CONF_IS_WATER, False),
     )
 
     await coordinator.async_config_entry_first_refresh()

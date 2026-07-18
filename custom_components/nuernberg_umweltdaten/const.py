@@ -15,6 +15,24 @@ DEFAULT_SCAN_INTERVAL_WATER = 15    # minutes
 MIN_SCAN_INTERVAL_MIN = 5
 MAX_SCAN_INTERVAL_MIN = 1440
 
+# Smart scheduling for hourly (air/weather) stations. The city publishes each
+# hourly value roughly 35 minutes past the hour, so the next poll is aimed a
+# couple of minutes after that. While the newest value has not advanced yet the
+# coordinator retries shortly instead of waiting a full hour.
+PUBLISH_DELAY_MINUTES = 35
+SCHEDULE_MARGIN_MINUTES = 2
+RETRY_MINUTES = 5
+MIN_NEXT_REFRESH_MIN = 2
+MAX_NEXT_REFRESH_MIN = 70
+
+# Long-term statistics. The History card always stamps a sensor state with the
+# poll time, which can never match the measurement time (the city publishes
+# late). To still expose values at their true timestamps we import them as
+# long-term statistics under dedicated ``*_hist`` statistic ids, independent of
+# the live sensor history. They show up in the Statistics card.
+STATISTIC_SUFFIX = "hist"
+STAT_BACKFILL_DAYS = 30
+
 # Base URL of the public microservice used by the city's "Umweltdaten" portal.
 BASE_URL = "https://microservices.nuernberg.de/umweltdaten/api/umweltdaten/"
 
