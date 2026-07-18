@@ -183,3 +183,46 @@ MEASURES: dict[str, MeasureDescriptor] = {
 def available_fields(snapshot: dict) -> list[str]:
     """Return the keys of measures that carry a value in the snapshot."""
     return [key for key in MEASURES if snapshot.get(key) is not None]
+
+
+# Category a measure belongs to. Mirrors the ``cat`` parameter the API expects
+# for the time-series endpoint (0 = Außenluft, 1 = Wetterdaten, 2 = Fließgewässer).
+MEASURE_CATEGORY: dict[str, int] = {
+    # Außenluft (cat 0)
+    "nitrogen_monoxide": 0,
+    "nitrogen_oxides": 0,
+    "nitrogen_dioxide": 0,
+    "sulfur_dioxide": 0,
+    "ozone": 0,
+    "ozone_8h": 0,
+    "carbon_monoxide": 0,
+    "benzene": 0,
+    "toluene": 0,
+    "methane": 0,
+    "thc": 0,
+    "non_methane_hydrocarbon": 0,
+    "particulate_matter_pm10": 0,
+    "particulate_matter_pm2_5": 0,
+    "particulate_matter_pm10_raw": 0,
+    "particulate_matter_pm2_5_raw": 0,
+    # Wetterdaten (cat 1)
+    "global_radiation": 1,
+    "air_pressure": 1,
+    "air_humidity": 1,
+    "air_temperature": 1,
+    "wind_speed_peak": 1,
+    "precipitation": 1,
+    "wind_speed": 1,
+    "wind_direction": 1,
+    "uv_index": 1,
+    # Fließgewässer (cat 2)
+    "temperature": 2,
+    "ph": 2,
+    "conductivity": 2,
+    "oxygen": 2,
+    "turbidity": 2,
+    "chlorophyll": 2,
+    "phosphorous": 2,
+    "ammonium": 2,
+    "nitrate": 2,
+}

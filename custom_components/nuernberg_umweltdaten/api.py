@@ -48,3 +48,18 @@ class NuernbergApiClient:
     async def get_measures(self, station_code: str) -> dict[str, Any]:
         """Return the latest snapshot for a station (merged air/weather/water)."""
         return await self._post("get_measures/", {"type": station_code})
+
+    async def get_series(
+        self, station_code: str, cat: int, measure: str, days: int = 1
+    ) -> dict[str, Any]:
+        """Return the time series for a single measure of a station.
+
+        The ``get/`` endpoint is noticeably fresher than ``get_measures/``
+        (which lags roughly one hour behind). Entries for measures a station
+        does not actually record come back filled with ``null``, so callers
+        must pick the last non-null entry themselves.
+        """
+        return await self._post(
+            "get/",
+            {"cat": str(cat), "type": station_code, "measure": measure, "days": str(days)},
+        )

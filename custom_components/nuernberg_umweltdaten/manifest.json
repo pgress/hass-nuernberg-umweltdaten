@@ -7,5 +7,5 @@
   "integration_type": "hub",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/pgress/ha-nuernberg-umweltdaten/issues",
-  "version": "1.1.1"
+  "version": "1.2.0"
 }
