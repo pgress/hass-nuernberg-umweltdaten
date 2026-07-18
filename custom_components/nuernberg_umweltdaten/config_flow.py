@@ -75,7 +75,10 @@ async def _station_has_data(hass, code: str) -> bool:
     message = resp.get("message") or []
     if not message:
         return False
-    snapshot = message[0]
+    snapshot: dict[str, Any] = {}
+    for record in message:
+        if isinstance(record, dict):
+            snapshot.update(record)
     return any(snapshot.get(key) is not None for key in MEASURES)
 
 

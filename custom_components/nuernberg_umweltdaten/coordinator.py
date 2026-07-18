@@ -53,4 +53,13 @@ class NuernbergDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         if not message:
             raise UpdateFailed("Keine Messwerte für diese Station verfügbar.")
 
-        return message[0]
+        # Some stations (e.g. Flughafen) return several records in one
+        # response - typically one air-quality and one weather record. Merge
+        # them into a single flat snapshot so every available field becomes a
+        # sensor. Later records win on key collisions, which is fine because
+        # overlapping keys (id_station, date_entry) carry identical values.
+        snapshot: dict[str, Any] = {}
+        for record in message:
+            if isinstance(record, dict):
+                snapshot.update(record)
+        return snapshot
