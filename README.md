@@ -32,6 +32,40 @@ Nürnberg, SUN) via its JSON microservice
 Each sensor carries `last_measured` (the station's `date_entry`) and
 `station_code` as extra attributes.
 
+## Stations & measurements
+
+<p align="center">
+  <img src="images/stations.png" alt="Übersicht der Messstationen in Nürnberg auf OpenStreetMap-Karte" width="720"/>
+</p>
+
+The table below shows which values each station currently provides. The
+integration creates exactly these sensors dynamically – `null` fields are
+skipped, so no "unknown" entities appear.
+
+| Code | Station | Kategorie | Messwerte |
+|------|---------|-----------|-----------|
+| FLH | Flughafen Nürnberg | Luft + Wetter | NO, NO₂, O₃, CO, Benzol, PM10, PM2,5 · Temp, Feuchte, Druck, Wind, Wind max, Windricht., Globalstr., Niederschlag, UV |
+| FSW | Frankenschnellweg | Luft + Wetter | NO, NO₂, PM10, PM2,5 · Temp, Feuchte, Wind, Wind max, Windricht., Niederschlag |
+| JKP | Jakobsplatz | Luft + Wetter | NO, NO₂, O₃, PM10, PM2,5 · Temp, Feuchte, Niederschlag |
+| MGH | Muggenhof (SUN) | Luft | NO, NO₂, CO |
+| MGHLFU | Muggenhof (LfU) | Luft | NO₂, O₃ |
+| BHF | Bahnhof | Luft | NO₂ |
+| VTS | Von-der-Tann-Straße | Luft | NO₂, CO, PM10 |
+| FTS | Fürth Theresienstraße | Luft | PM10 |
+| ATF | Altenfurt | Wetter | Niederschlag |
+| GBD | Gebersdorf | Wetter | Niederschlag |
+| WW | Wöhrder Wiese | Wetter | Niederschlag |
+| WD | Worzeldorf | Wetter | Niederschlag |
+| GGL | Großgründlach | Wetter | Niederschlag |
+| HD | Hüttendorf | Fließgewässer | Wassertemp., Leitf., O₂, Trübung, Nitrat *(Sanierung)* |
+| NM | Neumühle | Fließgewässer | Wassertemp., pH, Leitf., O₂, Trübung, Ammonium, Nitrat *(Sanierung)* |
+| THB | Theodor-Heuss-Brücke | Fließgewässer | – *(Sanierung, aktuell keine nutzbaren Werte)* |
+
+> **Hinweis:** Die Fließgewässer-Stationen *Hüttendorf*, *Neumühle* und
+> *Theodor-Heuss-Brücke* werden bis ca. November 2026 erneuert und liefern
+> teils veraltete bzw. keine Werte. *Muggenhof (SUN)* liegt in der
+> Wissmannstraße – praktisch vor der Tür, wenn du dort wohnst.
+
 ## Installation (HACS)
 
 1. Copy this repository into HACS as a custom repository

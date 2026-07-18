@@ -6,5 +6,5 @@
   "documentation": "https://www.nuernberg.de/internet/umweltdaten/",
   "integration_type": "hub",
   "iot_class": "cloud_polling",
-  "version": "1.0.0"
+  "version": "1.0.1"
 }
