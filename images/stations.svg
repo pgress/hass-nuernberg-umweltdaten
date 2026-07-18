@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 560" font-family="'Segoe UI',Arial,sans-serif">
+  <!-- Schematic overview of the Nürnberg Umweltdaten measuring stations.
+       Positions are approximate (manual estimate), not survey-grade. -->
+  <rect x="0" y="0" width="720" height="560" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="40" y="34" font-size="20" font-weight="700" fill="#222">Messstationen – Umweltdaten Nürnberg</text>
+  <text x="40" y="54" font-size="12" fill="#666">Schematische Übersicht · Positionen ungefähr</text>
+
+  <!-- Map frame -->
+  <rect x="40" y="70" width="640" height="410" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1"/>
+  <text x="48" y="86" font-size="10" fill="#8c959f">NW</text>
+  <text x="672" y="86" font-size="10" fill="#8c959f">NO</text>
+  <text x="48" y="474" font-size="10" fill="#8c959f">SW</text>
+  <text x="672" y="474" font-size="10" fill="#8c959f">SO</text>
+
+  <!-- Pegnitz river (stylised, west→east through the centre) -->
+  <polyline points="40,250 120,242 200,255 280,228 360,218 440,222 520,212 600,208 680,218"
+            fill="none" stroke="#9ecbff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="300" y="244" font-size="11" fill="#57606a" font-style="italic">Pegnitz</text>
+
+  <!-- North arrow -->
+  <g transform="translate(660,96)">
+    <polygon points="0,-16 8,12 0,4 -8,12" fill="#57606a"/>
+    <text x="-5" y="30" font-size="12" font-weight="700" fill="#57606a">N</text>
+  </g>
+
+  <!-- Stations: circle + code label -->
+  <g font-size="13" fill="#24292f">
+    <!-- Flughafen (mixed) -->
+    <circle cx="286" cy="80" r="7" fill="#d29922" stroke="#ffffff" stroke-width="2"/>
+    <text x="298" y="84" font-weight="600">FLH · Flughafen</text>
+
+    <!-- Großgründlach (weather) -->
+    <circle cx="124" cy="101" r="7" fill="#1f6feb" stroke="#ffffff" stroke-width="2"/>
+    <text x="136" y="105">GGL · Großgründlach</text>
+
+    <!-- Fürth Theresienstraße (air) -->
+    <circle cx="111" cy="148" r="7" fill="#d70f00" stroke="#ffffff" stroke-width="2"/>
+    <text x="123" y="152">FTS · Fürth-Theresienstr.</text>
+
+    <!-- Neumühle (water) -->
+    <circle cx="613" cy="162" r="7" fill="#2ea043" stroke="#ffffff" stroke-width="2"/>
+    <text x="603" y="156" text-anchor="end">NM · Neumühle</text>
+
+    <!-- Von-der-Tann-Straße (air) -->
+    <circle cx="444" cy="199" r="7" fill="#d70f00" stroke="#ffffff" stroke-width="2"/>
+    <text x="456" y="203">VTS · Von-der-Tann-Str.</text>
+
+    <!-- Wöhrder Wiese (weather) -->
+    <circle cx="411" cy="204" r="7" fill="#1f6feb" stroke="#ffffff" stroke-width="2"/>
+    <text x="411" y="190" text-anchor="middle">WW</text>
+
+    <!-- Theodor-Heuss-Brücke (water) -->
+    <circle cx="360" cy="199" r="7" fill="#2ea043" stroke="#ffffff" stroke-width="2"/>
+    <text x="360" y="184" text-anchor="middle">THB</text>
+
+    <!-- Jakobsplatz (mixed) -->
+    <circle cx="371" cy="214" r="7" fill="#d29922" stroke="#ffffff" stroke-width="2"/>
+    <text x="383" y="218">JKP · Jakobsplatz</text>
+
+    <!-- Bahnhof (air) -->
+    <circle cx="387" cy="222" r="7" fill="#d70f00" stroke="#ffffff" stroke-width="2"/>
+    <text x="399" y="236">BHF · Bahnhof</text>
+
+    <!-- Muggenhof SUN (air) -->
+    <circle cx="259" cy="218" r="7" fill="#d70f00" stroke="#ffffff" stroke-width="2"/>
+    <text x="271" y="222" font-weight="600">MGH · Muggenhof (SUN)</text>
+
+    <!-- Muggenhof LfU (air) -->
+    <circle cx="262" cy="236" r="7" fill="#d70f00" stroke="#ffffff" stroke-width="2"/>
+    <text x="274" y="240">MGHLFU · Muggenhof (LfU)</text>
+
+    <!-- Frankenschnellweg (mixed) -->
+    <circle cx="242" cy="260" r="7" fill="#d29922" stroke="#ffffff" stroke-width="2"/>
+    <text x="254" y="264">FSW · Frankenschnellweg</text>
+
+    <!-- Gebersdorf (weather) -->
+    <circle cx="192" cy="284" r="7" fill="#1f6feb" stroke="#ffffff" stroke-width="2"/>
+    <text x="204" y="288">GBD · Gebersdorf</text>
+
+    <!-- Hüttendorf (water) -->
+    <circle cx="545" cy="211" r="7" fill="#2ea043" stroke="#ffffff" stroke-width="2"/>
+    <text x="557" y="215">HD · Hüttendorf</text>
+
+    <!-- Altenfurt (weather) -->
+    <circle cx="562" cy="346" r="7" fill="#1f6feb" stroke="#ffffff" stroke-width="2"/>
+    <text x="574" y="350">ATF · Altenfurt</text>
+
+    <!-- Worzeldorf (weather) -->
+    <circle cx="259" cy="419" r="7" fill="#1f6feb" stroke="#ffffff" stroke-width="2"/>
+    <text x="271" y="423">WD · Worzeldorf</text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(40,498)" font-size="13" fill="#24292f">
+    <text x="0" y="0" font-weight="700">Legende</text>
+    <circle cx="10" cy="22" r="7" fill="#d29922" stroke="#ffffff" stroke-width="2"/>
+    <text x="26" y="26">Luft + Wetter</text>
+    <circle cx="150" cy="22" r="7" fill="#d70f00" stroke="#ffffff" stroke-width="2"/>
+    <text x="166" y="26">nur Luft</text>
+    <circle cx="270" cy="22" r="7" fill="#1f6feb" stroke="#ffffff" stroke-width="2"/>
+    <text x="286" y="26">nur Wetter</text>
+    <circle cx="390" cy="22" r="7" fill="#2ea043" stroke="#ffffff" stroke-width="2"/>
+    <text x="406" y="26">Fließgewässer</text>
+    <text x="0" y="50" font-size="11" fill="#8c959f">Positionen approximativ · Maßstab nicht maßstabsgetreu</text>
+  </g>
+</svg>
