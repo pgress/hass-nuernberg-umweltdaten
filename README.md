@@ -124,6 +124,15 @@ Die zugrunde liegende (undokumentierte) JSON-API wurde bereits von
 in TypeScript-Typen dokumentiert. Diese Integration baut auf derselben API auf;
 vielen Dank an das Projekt für die Vorarbeit zur API-Dokumentation.
 
+## Hinweis zur Entstehung
+
+Diese Integration wurde vollständig mit Unterstützung von KI (Kilo / Claude)
+erstellt – sämtlicher Code, die Konfigurations-Logik und die Dokumentation
+sind maschinell generiert und wurden vom Autor kuratiert und geprüft. Die
+zugrunde liegende API wurde durch Analyse des öffentlichen Web-Frontends der
+Stadt Nürnberg (Reverse Engineering) ermittelt; sie ist nicht offiziell
+dokumentiert und kann sich jederzeit ohne Vorankündigung ändern.
+
 ## Lizenz
 
 Diese Integration steht unter der [MIT-Lizenz](LICENSE).
