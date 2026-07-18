@@ -6,7 +6,8 @@ import logging
 from datetime import datetime, timedelta
 from typing import Any
 
-from homeassistant.core import HomeAssistant, callback
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers.storage import Store
 from homeassistant.helpers.update_coordinator import (
     DataUpdateCoordinator,
     UpdateFailed,
@@ -20,7 +21,9 @@ from .const import (
     PUBLISH_DELAY_MINUTES,
     RETRY_MINUTES,
     SCHEDULE_MARGIN_MINUTES,
+    STALL_RETRY_LIMIT,
     STAT_BACKFILL_DAYS,
+    STORAGE_VERSION,
 )
 from .measures import MEASURE_CATEGORY, available_fields
 from .statistics import import_statistics
@@ -34,11 +37,12 @@ _SERIES_DATE_FORMAT = "%d.%m.%Y %H:%M"
 class NuernbergDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
     """Pulls the freshest available values for one station on a schedule.
 
-    Hourly (air/weather) stations do not use a rigid poll interval. Instead the
-    next poll is aimed a couple of minutes after the city publishes the next
-    hourly value (~35 min past the hour), with short retries while the newest
-    value has not advanced yet. Water stations publish every 15 minutes and
-    keep the fixed interval configured by the user.
+    Hourly (air/weather) stations do not use a rigid poll interval. After each
+    successful update the public ``update_interval`` is recalculated so the next
+    poll lands a couple of minutes after the city publishes the next hourly
+    value (~35 min past the hour), with short retries while the newest value has
+    not advanced yet. Water stations publish every 15 minutes and keep the fixed
+    interval configured by the user.
     """
 
     def __init__(
@@ -63,23 +67,28 @@ class NuernbergDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         self.is_water = is_water
         # Newest measurement timestamp seen so far (naive local wall-clock).
         self._last_measure_dt: datetime | None = None
-        # Whether the one-time historical backfill of statistics has run.
+        # Consecutive successful polls where the newest timestamp did not advance.
+        self._stall_count = 0
+        # Newest measurement timestamp already written to long-term statistics.
+        self._last_imported_dt: datetime | None = None
+        # Persisted "backfill already done" flag (survives restarts/reloads).
         self._stats_backfilled = False
-
-    @callback
-    def _schedule_refresh(self) -> None:
-        """Aim the next poll at the expected next publication time."""
-        if not self.is_water:
-            self.update_interval = self._compute_next_interval()
-        super()._schedule_refresh()
+        self._backfill_state_loaded = False
+        self._store = Store(
+            hass, STORAGE_VERSION, f"{DOMAIN}_{station_code.lower()}_backfill"
+        )
 
     def _compute_next_interval(self) -> timedelta:
-        """Pick the timedelta until the next worthwhile poll."""
-        if not self.last_update_success:
-            return timedelta(minutes=RETRY_MINUTES)
+        """Pick the timedelta until the next worthwhile poll.
 
+        Only called after a successful update, so ``last_update_success`` is not
+        consulted here (failures keep the interval set at the top of the update).
+        """
         latest = self._last_measure_dt
         if latest is None:
+            return timedelta(minutes=self.scan_interval_minutes)
+        if self._stall_count >= STALL_RETRY_LIMIT:
+            # Stop retrying tightly; fall back to the configured cadence.
             return timedelta(minutes=self.scan_interval_minutes)
 
         now = datetime.now()  # naive local, matches the API's date_entry
@@ -115,6 +124,10 @@ class NuernbergDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         return snapshot, available_fields(snapshot)
 
     async def _async_update_data(self) -> dict[str, Any]:
+        # On a failed previous attempt, keep retries short until success recovers.
+        if not self.last_update_success:
+            self.update_interval = timedelta(minutes=RETRY_MINUTES)
+
         try:
             discover_snapshot, fields = await self._discover_fields()
         except NuernbergApiClientConnectionError as err:
@@ -123,12 +136,27 @@ class NuernbergDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         if not fields:
             raise UpdateFailed("Diese Station liefert momentan keine nutzbaren Messwerte.")
 
+        if not self._backfill_state_loaded:
+            stored = await self._store.async_load() or {}
+            self._stats_backfilled = bool(stored.get("backfilled"))
+            self._backfill_state_loaded = True
+
+        # Run the one-time 30-day backfill before the per-measure loop so the
+        # dedup guard (_last_imported_dt) already knows the newest imported
+        # timestamp and the loop does not re-import the current latest value.
+        if not self._stats_backfilled:
+            if await self._backfill_statistics(fields):
+                self._stats_backfilled = True
+                await self._store.async_save({"backfilled": True})
+
         # Fetch the freshest value per measure from the time-series endpoint,
         # which is roughly one hour ahead of the snapshot endpoint. The snapshot
         # serves as a fallback if a series call fails or contains only nulls.
         snapshot: dict[str, Any] = {}
         latest_dt: datetime | None = None
         stats_incremental: dict[str, list[tuple[datetime, float]]] = {}
+
+        prev_latest = self._last_measure_dt
 
         for field in fields:
             cat = MEASURE_CATEGORY.get(field)
@@ -172,10 +200,14 @@ class NuernbergDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             if parsed_dt is not None:
                 if latest_dt is None or parsed_dt > latest_dt:
                     latest_dt = parsed_dt
-                try:
-                    stats_incremental.setdefault(field, []).append((parsed_dt, float(value)))
-                except (TypeError, ValueError):
-                    pass
+                # Dedup: only import points newer than what is already stored.
+                if self._last_imported_dt is None or parsed_dt > self._last_imported_dt:
+                    try:
+                        stats_incremental.setdefault(field, []).append(
+                            (parsed_dt, float(value))
+                        )
+                    except (TypeError, ValueError):
+                        pass
 
         if not snapshot:
             raise UpdateFailed("Keine nutzbaren Messwerte abrufbar.")
@@ -187,25 +219,42 @@ class NuernbergDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             else discover_snapshot.get("date_entry")
         )
 
+        # Stall detection: newest measurement timestamp did not advance despite a
+        # successful poll (city publishing late or a degraded sensor).
+        if latest_dt is not None:
+            if prev_latest is not None and latest_dt == prev_latest:
+                self._stall_count += 1
+            else:
+                self._stall_count = 0
+        else:
+            self._stall_count = 0
         self._last_measure_dt = latest_dt
 
         # Long-term statistics at the true measurement timestamp (no extra API
         # calls: we reuse the series we already fetched above).
         if stats_incremental:
-            await import_statistics(
+            imported_max = await import_statistics(
                 self.hass, self.station_code, self.station_name, stats_incremental
             )
+            if imported_max is not None and (
+                self._last_imported_dt is None or imported_max > self._last_imported_dt
+            ):
+                self._last_imported_dt = imported_max
 
-        # One-time backfill so the Statistics card shows history, not just the
-        # moment the integration was installed.
-        if not self._stats_backfilled:
-            await self._backfill_statistics(fields)
-            self._stats_backfilled = True
+        # Recalculate the public update interval for hourly stations so the next
+        # poll targets the expected publication time (supported HA API; no
+        # override of private coordinator internals).
+        if not self.is_water:
+            self.update_interval = self._compute_next_interval()
 
         return snapshot
 
-    async def _backfill_statistics(self, fields: list[str]) -> None:
-        """Import the recent history of each measure as long-term statistics."""
+    async def _backfill_statistics(self, fields: list[str]) -> bool:
+        """Import the recent history of each measure as long-term statistics.
+
+        Returns ``True`` when at least one point was imported, so the caller can
+        persist the completion marker only on actual success.
+        """
         points: dict[str, list[tuple[datetime, float]]] = {}
         for field in fields:
             cat = MEASURE_CATEGORY.get(field)
@@ -231,7 +280,13 @@ class NuernbergDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                     points.setdefault(field, []).append((dt, float(entry[field])))
                 except (KeyError, ValueError, TypeError):
                     continue
-        if points:
-            await import_statistics(
-                self.hass, self.station_code, self.station_name, points
-            )
+        if not points:
+            return False
+        imported_max = await import_statistics(
+            self.hass, self.station_code, self.station_name, points
+        )
+        if imported_max is not None and (
+            self._last_imported_dt is None or imported_max > self._last_imported_dt
+        ):
+            self._last_imported_dt = imported_max
+        return True

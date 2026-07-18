@@ -82,3 +82,15 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     if unload_ok:
         hass.data.get(DOMAIN, {}).pop(entry.entry_id, None)
     return unload_ok
+
+
+async def async_remove_entry(hass: HomeAssistant, entry: ConfigEntry) -> None:
+    """Clean up when a config entry is removed (deleted).
+
+    Deletes the long-term ``*_hist`` statistics this integration created so the
+    recorder does not keep orphaned rows. Only invoked on deletion, not on
+    reload, so a poll-interval change never wipes statistics history.
+    """
+    from .statistics import clear_statistics
+
+    await clear_statistics(hass, entry.data[CONF_STATION_CODE])

@@ -185,6 +185,12 @@ def available_fields(snapshot: dict) -> list[str]:
     return [key for key in MEASURES if snapshot.get(key) is not None]
 
 
+# Circular quantities (e.g. wind direction in degrees) wrap around at 0/360.
+# Home Assistant exposes no circular mean type for long-term statistics, so
+# these are skipped when importing statistics to avoid bogus arithmetic means.
+CIRCULAR_FIELDS: frozenset[str] = frozenset({"wind_direction"})
+
+
 # Category a measure belongs to. Mirrors the ``cat`` parameter the API expects
 # for the time-series endpoint (0 = Außenluft, 1 = Wetterdaten, 2 = Fließgewässer).
 MEASURE_CATEGORY: dict[str, int] = {

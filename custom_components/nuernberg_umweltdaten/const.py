@@ -24,6 +24,14 @@ SCHEDULE_MARGIN_MINUTES = 2
 RETRY_MINUTES = 5
 MIN_NEXT_REFRESH_MIN = 2
 MAX_NEXT_REFRESH_MIN = 70
+# After this many consecutive polls where the newest measurement timestamp did
+# not advance (while requests still succeed), stop the short retry loop and
+# fall back to the configured scan interval to avoid hammering the API.
+STALL_RETRY_LIMIT = 4
+
+# hass.storage version/key for persisting the one-time statistics backfill so a
+# restart or options-reload does not re-fetch and re-import 30 days of history.
+STORAGE_VERSION = 1
 
 # Long-term statistics. The History card always stamps a sensor state with the
 # poll time, which can never match the measurement time (the city publishes
