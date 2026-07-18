@@ -3,9 +3,9 @@
   "name": "Nürnberg Umweltdaten",
   "codeowners": ["@pgress"],
   "config_flow": true,
-  "documentation": "https://github.com/pgress/hass-nuernberg-umweltdaten",
+  "documentation": "https://github.com/pgress/ha-nuernberg-umweltdaten",
   "integration_type": "hub",
   "iot_class": "cloud_polling",
-  "issue_tracker": "https://github.com/pgress/hass-nuernberg-umweltdaten/issues",
-  "version": "1.1.0"
+  "issue_tracker": "https://github.com/pgress/ha-nuernberg-umweltdaten/issues",
+  "version": "1.1.1"
 }

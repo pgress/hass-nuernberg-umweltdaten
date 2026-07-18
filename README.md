@@ -76,7 +76,7 @@ Integration erzeugt genau diese Sensoren dynamisch – `null`-Felder werden
 
 ## Installation (HACS)
 
-[![Open your Home Assistant instance and add this repository to HACS.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=pgress&repository=hass-nuernberg-umweltdaten&category=integration)
+[![Open your Home Assistant instance and add this repository to HACS.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=pgress&repository=ha-nuernberg-umweltdaten&category=integration)
 
 1. Dieses Repository in HACS als benutzerdefiniertes Repository hinzufügen
    (**Einstellungen → Benutzerdefinierte Repositories**, Kategorie *Integration*).
